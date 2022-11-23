@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  prepare:
+    runs-on: ubuntu-22.04
+    outputs:
+      tag: ''
+    steps:
+      - id: get-tag
+        run: echo tag=$GITHUB_SHA >> $GITHUB_OUTPUT
+  test:
+    needs:
+      - prepare
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo hello
+        if: needs.prepare.outputs.tag
